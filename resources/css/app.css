@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.datatable {
+    @apply rounded-[12px]
+}
+.dataTable{
+    @apply divide-y divide-gray-200 dark:divide-gray-700
+}
+
+.dt-layout-row {
+    @apply flex justify-between
+}
+
+.dt-column-order {
+    @apply hidden
+}
+
+.dt-layout-full {
+    @apply w-full
+}
+
+.dt-info {
+    @apply font-[400] text-[14px] leading-[19.19px] text-[#171A22]
+}
+
+.dt-paging>nav {
+    @apply flex gap-x-[5.19px]
+}
+
+.dt-paging-button {
+    @apply bg-[#F9F9F9] rounded-full py-[8px] px-[13.5px] font-[400] text-[14px] leading-[145%] text-center text-[#98A2B3]
+}
+
+.dt-paging-button.current {
+    @apply border border-[#2345B5] rounded-[6px] text-[#000000]
+}
+
+.dt-paging-button.previous, .dt-paging-button.next {
+    @apply bg-[#FFFFFF]
+}
+
+.dt-length > select {
+    @apply border border-[#D0D5DD] py-[8px] px-[12px] rounded-[8px] w-[70px] my-[12px]
+}
+
+.dt-length > label {
+    @apply font-[400] text-[14px] leading-[145%] text-[#667185] ml-[12px]
+}
+
+.dt-layout-table > div > table > tbody > tr  > td {
+    @apply py-[16px] font-[400] text-[13px] leading-[145%] text-[#475367]
+}
+
+.dt-layout-table > div > table > tbody > tr  > td:first-child {
+    @apply ps-[24px]
+}
+.dt-layout-table > div > table > tbody > tr  > td:last-child {
+    @apply pe-[20px]
+}
+
+.dt-column-title  {
+    @apply font-[500] text-[12px] leading-[145%] text-[#344054] tracking-[-0.5%]
+}
+
+.dt-layout-row {
+    @apply mx-[24px]
+}
+
+.dt-layout-row.dt-layout-table {
+    @apply mx-[0]
+}
+
+.dt-search{
+    @apply mb-[38px] relative
+}
+
+.dt-info, .dt-paging  {
+    @apply my-[12px]
+
+}
+
+.dataTable > tbody > tr > td, .dataTable > thead > tr > th {
+    @apply text-left px-6
+}
+.dt-scroll-head {
+    @apply rounded-t-[12px]
+}
+
+.dataTable > tbody > tr > td{
+    @apply font-[400] text-[12px] leading-[145%] text-[#344054] py-[18px] bg-white
+}
+
+.dt-column-title{
+    @apply flex items-center gap-x-[12px]
+}
+.dt-info{
+    @apply font-[400] text-[14px] leading-[145%] text-[#667185]
+}
+
+.dt-container .dt-layout-row:nth-of-type(3) {
+    @apply bg-white px-6 !mx-0 border border-[#E4E7EC] border-t-[0] !important;
+}
+
+#tableFooter {
+    @apply bg-white border-x border-b border-[#E4E7EC] mx-0 px-[24px] rounded-b-[12px]
+}
+
+table, tr {
+  border: 1px solid #E5E7EB;
+  border-collapse: collapse;
+  border-radius: 12px;
+}
+
+.input-filter {
+    @apply py-[10px] px-[12px] border border-[#98A2B3] rounded-[10px]  font-[400] text-[14px] leading-[145%] placeholder:text-[#98A2B3] placeholder:text-[14px]
+}
+
+.page-title {
+    @apply font-[600] text-[24px] leading-[120%] tracking-[-2%] text-[#101928]
+}
+
+.page-subtitle {
+    @apply font-[400] text-[14px] leading-[145%] tracking-[0%] text-[#344054]
+}

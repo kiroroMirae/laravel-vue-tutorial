@@ -1,0 +1,31 @@
+<x-app-layout>
+    <x-slot  name="header">
+        User Index
+    </x-slot>
+
+    <x-slot name="styles">
+        <style>
+            .profile { color: red; }
+        </style>
+    </x-slot>
+    <div class="profile">
+        <div class="overflow-y-auto h-full
+                [&::-webkit-scrollbar]:w-2
+                [&::-webkit-scrollbar-track]:rounded-full
+                [&::-webkit-scrollbar-track]:bg-gray-100
+                [&::-webkit-scrollbar-thumb]:rounded-full
+                [&::-webkit-scrollbar-thumb]:bg-gray-300
+                dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+        >
+
+            <div class="bg-[#F7F9FC] h-full w-full flex flex-col px-[33px] py-[28px] overflow-y-auto min-h-[100vh]">
+
+                {{-- User Index Component --}}
+                <user-index sanctum_token="{{ $sanctum_token }}" ></user-index>
+
+            </div>
+
+        </div>
+    </div>
+</x-app-layout>
