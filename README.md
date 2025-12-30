@@ -13,6 +13,7 @@ Installation
 1. Clone the Repository
 
 git clone https://github.com/kiroroMirae/laravel-vue-tutorial.git
+
 cd laravel-vue-tutorial
 
 2. Install Dependencies
