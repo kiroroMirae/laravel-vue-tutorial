@@ -83,7 +83,3 @@ composer run dev
 - This project does not use Vue Router or Inertia  
 
 ---
-
-## License
-
-This project is intended for internal training and educational purposes.
