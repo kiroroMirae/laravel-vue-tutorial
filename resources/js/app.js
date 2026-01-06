@@ -8,6 +8,7 @@ import "vue-toastification/dist/index.css";
 import _Toast from './Resources/_Toast.vue';
 import UserIndex from './components/user/UserIndex.vue';
 import CloseIcon from "./components/icons/CloseIcon.vue";
+import UserCreate from './components/user/UserCreate.vue';
 
 
 import Alpine from 'alpinejs';
@@ -32,6 +33,6 @@ app.use(Toast, {
 });
 
 app.component("DataTable", DataTable);
-app.component('user-index', UserIndex);
-
+app.component('UserIndex', UserIndex);
+app.component('UserCreate', UserCreate);
 app.mount('#app');

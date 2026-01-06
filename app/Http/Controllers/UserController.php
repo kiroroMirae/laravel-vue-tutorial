@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+         return view('user.create')->with(['sanctum_token' => session('auth_token')]);
     }
 
     /**
@@ -28,7 +28,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8',
+            ]);
+
+            $data = UserAction::createUser($request->post());
+
+            return response()->json(['message' => 'User created successfully']);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 422);
+        }
+
     }
 
     /**

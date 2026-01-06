@@ -14,5 +14,6 @@ Route::group([
     'as' => 'user.',
 ], function () {
     Route::post('/getUserList', [UserController::class, 'getUserList']);
+    Route::post('/createUser', [UserController::class, 'store']);
 });
 

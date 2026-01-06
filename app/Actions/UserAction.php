@@ -67,5 +67,23 @@ class UserAction {
 
         return $response;
     }
+    public static function createUser($params)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user = new User();
+            $user->name = $params['name'];
+            $user->email = $params['email'];
+            $user->password = Hash::make($params['password']);
+            $user->save();
+
+            DB::commit();
+            return $user;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
 
 }

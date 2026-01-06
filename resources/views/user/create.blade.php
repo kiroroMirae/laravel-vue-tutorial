@@ -1,12 +1,8 @@
 <x-app-layout>
     <x-slot  name="header">
-        User Index
+        User Create
     </x-slot>
 
-    <x-slot name="styles">
-        <style>
-        </style>
-    </x-slot>
     <div class="overflow-y-auto h-full
             [&::-webkit-scrollbar]:w-2
             [&::-webkit-scrollbar-track]:rounded-full
@@ -20,7 +16,7 @@
         <div class="bg-[#F7F9FC] h-full w-full flex flex-col px-[33px] py-[28px] overflow-y-auto min-h-[100vh]">
 
             {{-- User Index Component --}}
-            <user-index sanctum_token="{{ $sanctum_token }}" ></user-index>
+            <user-create sanctum_token="{{ $sanctum_token }}" ></user-create>
 
         </div>
 
