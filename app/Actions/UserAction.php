@@ -53,7 +53,13 @@ class UserAction {
         $result = [];
         foreach ($data->toArray() as $index => $item) {
             // additional data formatting eg.. adding index
+            $edit = route('user.edit', ['user' => $item['id']]);
+            $delete = route('user.destroy', ['user' => $item['id']]);
+
             $item['index'] = $params['start']+1;
+            $item['edit'] = $edit;
+            $item['delete'] = $delete;
+
             $result[] = $item;
             $params['start']++;
         }
@@ -76,6 +82,27 @@ class UserAction {
             $user->name = $params['name'];
             $user->email = $params['email'];
             $user->password = Hash::make($params['password']);
+            $user->save();
+
+            DB::commit();
+            return $user;
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    public static function updateUser($params, User $user)
+    {
+
+        try {
+            DB::beginTransaction();
+
+            $user->name = $params['name'];
+            $user->email = $params['email'];
+            if (isset($params['new_password']) && $params['new_password'] != '') {
+                $user->password = Hash::make($params['new_password']);
+            }
             $user->save();
 
             DB::commit();

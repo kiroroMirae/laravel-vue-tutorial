@@ -15,5 +15,7 @@ Route::group([
 ], function () {
     Route::post('/getUserList', [UserController::class, 'getUserList']);
     Route::post('/createUser', [UserController::class, 'store']);
+    Route::put('/updateUser/{user}', [UserController::class, 'update']);
+    Route::delete('/deleteUser/{user}', [UserController::class, 'destroy']);
 });
 

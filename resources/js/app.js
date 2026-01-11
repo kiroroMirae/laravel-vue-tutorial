@@ -9,6 +9,7 @@ import _Toast from './Resources/_Toast.vue';
 import UserIndex from './components/user/UserIndex.vue';
 import CloseIcon from "./components/icons/CloseIcon.vue";
 import UserCreate from './components/user/UserCreate.vue';
+import UserEdit from './components/user/UserEdit.vue';
 
 
 import Alpine from 'alpinejs';
@@ -35,4 +36,5 @@ app.use(Toast, {
 app.component("DataTable", DataTable);
 app.component('UserIndex', UserIndex);
 app.component('UserCreate', UserCreate);
+app.component('UserEdit', UserEdit);
 app.mount('#app');

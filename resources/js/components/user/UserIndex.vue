@@ -35,33 +35,55 @@
                     <th scope="col" class="ps-[24px] py-3 text-start bg-[#F0F2F5] rounded-tl-[12px] w-2/12">
                         No.
                     </th>
-                    <th scope="col" class="ps-[24px] py-3 text-start bg-[#F0F2F5] rounded-tl-[12px] w-5/12">
+                    <th scope="col" class="ps-[24px] py-3 text-start bg-[#F0F2F5] rounded-tl-[12px] w-4/12">
                         Full Name
                     </th>
-                    <th scope="col" class="ps-[24px] py-3 text-start bg-[#F0F2F5] rounded-tl-[12px] w-5/12">
+                    <th scope="col" class="ps-[24px] py-3 text-start bg-[#F0F2F5] rounded-tl-[12px] w-4/12">
                         Email
+                    </th>
+                    <th scope="col" class="ps-[24px] py-3 text-start bg-[#F0F2F5] rounded-tl-[12px] w-2/12">
+                        Action
                     </th>
                 </tr>
             </thead>
         </DataTable>
     </div>
 
+    <ConfirmModal
+        :show="showConfirmModal"
+        @close="closeConfirmModal"
+        @confirm="deleteUser(confirmedUserId)"
+    />
+
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import _ from 'lodash';
+import { useModal } from '../../composable/useModal';
+import ConfirmModal from './ConfirmModal.vue';
+import { useToast } from 'vue-toastification';
 const props = defineProps({
     sanctum_token: {
         type: String,
         required: true,
     },
 })
+
+const toast = useToast();
+
 // Refs and reactive data
 const tableRefs = ref(null);
 const data = ref([]);
 let dt
 const searchQuery = ref('');
+
+// how to handle modal
+const {
+    show: showConfirmModal,
+    openModal: openConfirmModal,
+    closeModal: closeConfirmModal,
+} = useModal();
 
 // DataTable columns definition
 var columns = [
@@ -73,6 +95,14 @@ var columns = [
     },
     {
         data: 'email',
+    },
+    {
+        data: null,
+        render: function (data, type, row) {
+            let content = "";
+            content = `<div class="flex gap-x-[15px]"></div><a href="${row.edit}" class="text-blue-600 hover:underline mr-4">Edit</a><button id="delete-user" data-id="${row.id}" class="text-red-600 hover:underline">Delete</button>`;
+            return content;
+        },
     },
 ]
 
@@ -132,15 +162,52 @@ const options = {
         }
     },
 };
-// On component mount, get DataTable instance
+
+// On component mount, get DataTable instance & attach event listeners
+const confirmedUserId = ref(null);
 onMounted(() => {
     dt = tableRefs.value?.dt;
+
+    // Event delegation for delete buttons
+    document.querySelector('table').addEventListener('click', function(event) {
+        if (event.target && event.target.id === 'delete-user') {
+            const userId = event.target.getAttribute('data-id');
+            confirmedUserId.value = userId;
+            openConfirmModal();
+        }
+    });
 });
 
 // Debounced search to reduce server calls
 const reloadTable = _.debounce(() => {
     dt.ajax.reload();
 }, 300);
+
+const deleteUser = async (id) => {
+    closeConfirmModal();
+    try {
+        const response = await fetch(`/api/user/deleteUser/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': props.sanctum_token,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        toast.success(result.message);
+        reloadTable();
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        toast.error(
+            error.response?.data?.message || "An unexpected error occurred"
+        );
+    }
+}
 
 watch(searchQuery, () => {
     reloadTable();

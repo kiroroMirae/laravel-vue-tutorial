@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\UserAction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -55,25 +56,40 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit')->with(['user' => $user, 'sanctum_token' => session('auth_token')]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+            ]);
+
+            $data = UserAction::updateUser($request->post(), $user);
+            return response()->json(['message' => 'User updated successfully']);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 422);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return response()->json(['message' => 'User deleted successfully']);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => $th->getMessage()], 422);
+        }
     }
 
 
